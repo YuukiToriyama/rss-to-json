@@ -1,7 +1,9 @@
 use std::borrow::Cow;
-use hard_xml::XmlRead;
 
-#[derive(XmlRead, PartialEq, Debug)]
+use hard_xml::XmlRead;
+use serde::Serialize;
+
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "feed")]
 pub struct Feed<'a> {
     #[xml(attr = "xmlns")]
@@ -12,21 +14,21 @@ pub struct Feed<'a> {
     updated_date: Option<UpdatedDate<'a>>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "title")]
 struct Title<'a> {
     #[xml(text)]
     text: Cow<'a, str>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "updated")]
 struct UpdatedDate<'a> {
     #[xml(text)]
     text: Cow<'a, str>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "entry")]
 struct Entry<'a> {
     #[xml(child = "title")]
@@ -43,7 +45,7 @@ struct Entry<'a> {
     author: Author<'a>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "link")]
 struct Link<'a> {
     #[xml(attr = "rel")]
@@ -54,21 +56,21 @@ struct Link<'a> {
     href: Cow<'a, str>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "published")]
 struct PublishedDate<'a> {
     #[xml(text)]
     text: Cow<'a, str>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "summary")]
 struct Summary<'a> {
     #[xml(text)]
     text: Cow<'a, str>,
 }
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "author")]
 struct Author<'a> {
     #[xml(child = "name")]
@@ -76,7 +78,7 @@ struct Author<'a> {
 }
 
 
-#[derive(XmlRead, PartialEq, Debug)]
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "name")]
 struct Name<'a> {
     #[xml(text)]
