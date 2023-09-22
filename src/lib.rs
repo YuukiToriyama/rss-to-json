@@ -1,9 +1,11 @@
 use hard_xml::XmlRead;
+use wasm_bindgen::prelude::wasm_bindgen;
 use crate::structs::Feed;
 
 mod structs;
 
-fn parse_rss(xml: &str) -> String {
+#[wasm_bindgen]
+pub fn parse_rss(xml: &str) -> String {
     let feed = Feed::from_str(xml).unwrap();
     serde_json::to_string(&feed).unwrap()
 }
