@@ -1,0 +1,14 @@
+{
+  "name": "rss-to-json",
+  "version": "0.1.0",
+  "files": [
+    "rss_to_json_bg.wasm",
+    "rss_to_json.js",
+    "rss_to_json.d.ts"
+  ],
+  "module": "rss_to_json.js",
+  "types": "rss_to_json.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
