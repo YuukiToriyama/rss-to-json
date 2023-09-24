@@ -6,6 +6,7 @@ mod structs;
 
 #[wasm_bindgen]
 pub fn parse_rss(xml: &str) -> String {
+    console_error_panic_hook::set_once();
     let feed = Feed::from_str(xml).unwrap();
     serde_json::to_string(&feed).unwrap()
 }
