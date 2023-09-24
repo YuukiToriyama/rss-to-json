@@ -23,6 +23,8 @@ jobs:
         run: wasm-pack build --target web
       - name: Copy files
         run: cp -r ./public ./pkg
+      - name: Remove .gitignore
+        run: rm ./pkg/.gitignore
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
