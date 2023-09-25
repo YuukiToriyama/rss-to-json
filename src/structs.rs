@@ -24,25 +24,18 @@ struct Title<'a> {
 }
 
 #[derive(XmlRead, PartialEq, Debug, Serialize)]
-#[xml(tag = "updated")]
-struct UpdatedDate<'a> {
-    #[xml(text)]
-    text: Cow<'a, str>,
-}
-
-#[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "entry")]
 struct Entry<'a> {
-    #[xml(child = "title")]
-    title: Title<'a>,
+    #[xml(flatten_text = "title")]
+    title: Cow<'a, str>,
     #[xml(child = "link")]
     link: Link<'a>,
-    #[xml(child = "published")]
-    published_date: PublishedDate<'a>,
-    #[xml(child = "updated")]
-    updated_date: UpdatedDate<'a>,
-    #[xml(child = "summary")]
-    summary: Option<Summary<'a>>,
+    #[xml(flatten_text = "published")]
+    published_date: Cow<'a, str>,
+    #[xml(flatten_text = "updated")]
+    updated_date: Cow<'a, str>,
+    #[xml(flatten_text = "summary")]
+    summary: Option<Cow<'a, str>>,
     #[xml(child = "author")]
     author: Author<'a>,
     #[xml(child = "category")]
@@ -58,20 +51,6 @@ struct Link<'a> {
     content_type: Cow<'a, str>,
     #[xml(attr = "href")]
     href: Cow<'a, str>,
-}
-
-#[derive(XmlRead, PartialEq, Debug, Serialize)]
-#[xml(tag = "published")]
-struct PublishedDate<'a> {
-    #[xml(text)]
-    text: Cow<'a, str>,
-}
-
-#[derive(XmlRead, PartialEq, Debug, Serialize)]
-#[xml(tag = "summary")]
-struct Summary<'a> {
-    #[xml(text)]
-    text: Cow<'a, str>,
 }
 
 #[derive(XmlRead, PartialEq, Debug, Serialize)]
@@ -145,11 +124,11 @@ mod tests {
         assert_eq!(
             parsed_xml,
             Entry {
-                title: Title { text: "Today's news".into() },
+                title: "Today's news".into(),
                 link: Link { rel: "alternate".into(), content_type: "text/html".into(), href: "https://example.com/news/20230922.html".into() },
-                published_date: PublishedDate { text: "2023-09-22T15:12:39Z".into() },
-                updated_date: UpdatedDate { text: "2023-09-22T17:07:24Z".into() },
-                summary: Some(Summary { text: "It was sunny whole a day.".into() }),
+                published_date: "2023-09-22T15:12:39Z".into(),
+                updated_date: "2023-09-22T17:07:24Z".into(),
+                summary: Some("It was sunny whole a day.".into()),
                 author: Author { name: Name { text: "Mr. Hoge".into() } },
                 category_list: vec![
                     Category { term: "Linux".into(), scheme: "http://www.sixapart.com/ns/types#category".into() },
