@@ -53,7 +53,7 @@ mod tests {
         let json = parse_rss(xml, false);
         assert_eq!(
             json,
-            r#"{"xmlns":"http://www.w3.org/2005/Atom","title":{"text":"Hogehoge RSS Feed"},"updated_date":{"text":"2023-09-22T03:07:24Z"},"entries":[{"title":{"text":"Today's news"},"link":{"rel":"alternate","content_type":"text/html","href":"https://example.com/news/20230922.html"},"published_date":{"text":"2023-09-22T15:12:39Z"},"updated_date":{"text":"2023-09-22T17:07:24Z"},"summary":{"text":"It was sunny whole a day."},"author":{"name":{"text":"Mr. Hoge"}}}]}"#
+            r#"{"xmlns":"http://www.w3.org/2005/Atom","title":{"text":"Hogehoge RSS Feed"},"updated_date":{"text":"2023-09-22T03:07:24Z"},"entries":[{"title":{"text":"Today's news"},"link":{"rel":"alternate","content_type":"text/html","href":"https://example.com/news/20230922.html"},"published_date":{"text":"2023-09-22T15:12:39Z"},"updated_date":{"text":"2023-09-22T17:07:24Z"},"summary":{"text":"It was sunny whole a day."},"author":{"name":{"text":"Mr. Hoge"}},"category_list":[]}]}"#
         )
     }
 }
