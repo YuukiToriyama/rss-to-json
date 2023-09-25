@@ -45,6 +45,8 @@ struct Entry<'a> {
     summary: Option<Summary<'a>>,
     #[xml(child = "author")]
     author: Author<'a>,
+    #[xml(child = "category")]
+    category_list: Vec<Category<'a>>,
 }
 
 #[derive(XmlRead, PartialEq, Debug, Serialize)]
@@ -87,6 +89,15 @@ struct Name<'a> {
     text: Cow<'a, str>,
 }
 
+#[derive(XmlRead, PartialEq, Debug, Serialize)]
+#[xml(tag = "category")]
+struct Category<'a> {
+    #[xml(attr = "term")]
+    term: Cow<'a, str>,
+    #[xml(attr = "scheme")]
+    scheme: Cow<'a, str>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -127,6 +138,8 @@ mod tests {
                 <author>
                     <name>Mr. Hoge</name>
                 </author>
+                <category term="Linux" scheme="http://www.sixapart.com/ns/types#category"/>
+                <category term="OS" scheme="http://www.sixapart.com/ns/types#category"/>
             </entry>"#;
         let parsed_xml = Entry::from_str(xml).unwrap();
         assert_eq!(
@@ -138,6 +151,10 @@ mod tests {
                 updated_date: UpdatedDate { text: "2023-09-22T17:07:24Z".into() },
                 summary: Some(Summary { text: "It was sunny whole a day.".into() }),
                 author: Author { name: Name { text: "Mr. Hoge".into() } },
+                category_list: vec![
+                    Category { term: "Linux".into(), scheme: "http://www.sixapart.com/ns/types#category".into() },
+                    Category { term: "OS".into(), scheme: "http://www.sixapart.com/ns/types#category".into() },
+                ],
             }
         )
     }
