@@ -8,10 +8,10 @@ use serde::Serialize;
 pub struct Feed<'a> {
     #[xml(attr = "xmlns")]
     xmlns: Cow<'a, str>,
-    #[xml(child = "title")]
-    title: Option<Title<'a>>,
-    #[xml(child = "updated")]
-    updated_date: Option<UpdatedDate<'a>>,
+    #[xml(flatten_text = "title")]
+    title: Option<Cow<'a, str>>,
+    #[xml(flatten_text = "updated")]
+    updated_date: Option<Cow<'a, str>>,
     #[xml(child = "entry")]
     entries: Vec<Entry<'a>>,
 }
@@ -120,8 +120,8 @@ mod tests {
             parsed_xml,
             Feed {
                 xmlns: "http://www.w3.org/2005/Atom".into(),
-                title: Some(Title { text: "Hogehoge RSS Feed".into() }),
-                updated_date: Some(UpdatedDate { text: "2023-09-22T03:07:24Z".into() }),
+                title: Some("Hogehoge RSS Feed".into()),
+                updated_date: Some("2023-09-22T03:07:24Z".into()),
                 entries: vec![],
             })
     }
