@@ -2,6 +2,9 @@
 name = "rss-to-json"
 version = "0.2.0"
 edition = "2021"
+license = "MIT"
+authors = ["Torichan <github@toriyama.dev>"]
+repository = "https://github.com/YuukiToriyama/rss-to-json"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
