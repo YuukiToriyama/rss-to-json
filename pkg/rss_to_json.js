@@ -103,16 +103,17 @@ function getStringFromWasm0(ptr, len) {
 }
 /**
 * @param {string} xml
+* @param {boolean} pretty_printed
 * @returns {string}
 */
-export function parse_rss(xml) {
+export function parse_rss(xml, pretty_printed) {
     let deferred2_0;
     let deferred2_1;
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         const ptr0 = passStringToWasm0(xml, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
-        wasm.parse_rss(retptr, ptr0, len0);
+        wasm.parse_rss(retptr, ptr0, len0, pretty_printed);
         var r0 = getInt32Memory0()[retptr / 4 + 0];
         var r1 = getInt32Memory0()[retptr / 4 + 1];
         deferred2_0 = r0;
