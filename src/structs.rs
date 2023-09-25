@@ -56,16 +56,8 @@ struct Link<'a> {
 #[derive(XmlRead, PartialEq, Debug, Serialize)]
 #[xml(tag = "author")]
 struct Author<'a> {
-    #[xml(child = "name")]
-    name: Name<'a>,
-}
-
-
-#[derive(XmlRead, PartialEq, Debug, Serialize)]
-#[xml(tag = "name")]
-struct Name<'a> {
-    #[xml(text)]
-    text: Cow<'a, str>,
+    #[xml(flatten_text = "name")]
+    name: Cow<'a, str>,
 }
 
 #[derive(XmlRead, PartialEq, Debug, Serialize)]
@@ -129,7 +121,7 @@ mod tests {
                 published_date: "2023-09-22T15:12:39Z".into(),
                 updated_date: "2023-09-22T17:07:24Z".into(),
                 summary: Some("It was sunny whole a day.".into()),
-                author: Author { name: Name { text: "Mr. Hoge".into() } },
+                author: Author { name: "Mr. Hoge".into() },
                 category_list: vec![
                     Category { term: "Linux".into(), scheme: "http://www.sixapart.com/ns/types#category".into() },
                     Category { term: "OS".into(), scheme: "http://www.sixapart.com/ns/types#category".into() },
